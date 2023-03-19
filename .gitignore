@@ -227,3 +227,6 @@ replay_pid*
 *.iml
 out
 gen
+.java-version
+build/
+.gradle/
