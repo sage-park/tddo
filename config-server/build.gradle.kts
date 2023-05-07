@@ -27,7 +27,10 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
 }
+
 
 dependencyManagement {
 	imports {

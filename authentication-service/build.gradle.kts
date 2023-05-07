@@ -32,6 +32,7 @@ dependencies {
     runtimeOnly("com.mysql:mysql-connector-j")
     runtimeOnly("com.h2database:h2")
 
+    implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
 }
 
 dependencyManagement {

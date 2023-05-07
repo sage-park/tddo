@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
 	java
 	id("org.springframework.boot") version "3.0.4"
@@ -40,6 +42,8 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
+
+	implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
 }
 
 dependencyManagement {
