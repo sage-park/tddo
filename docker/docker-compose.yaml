@@ -73,6 +73,8 @@ services:
   authentication-service:
     image: tddo-authentication-service:0.0.1
     container_name: authentication-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=elk"
     ports:
       - "8073:8073"
     networks:
