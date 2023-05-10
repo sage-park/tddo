@@ -29,7 +29,7 @@ services:
     container_name: logstash
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
-      - ./logstash:/etc/logstash/conf.d
+      - ./docker/logstash:/etc/logstash/conf.d
     ports:
       - "5001:5001"
     depends_on:
@@ -37,7 +37,8 @@ services:
     networks:
       - tddo
   config-server:
-    image: tddo-config-server:0.0.1
+    build:
+      context: ./config-server
     container_name: config-server
     ports:
       - "8071:8071"
@@ -46,7 +47,8 @@ services:
     depends_on:
       - logstash
   discovery-server:
-    image: tddo-discovery-server:0.0.1
+    build:
+      context: ./discovery-server
     container_name: discovery-server
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
@@ -58,7 +60,8 @@ services:
       - logstash
       - config-server
   gateway-server:
-    image: tddo-gateway-server:0.0.1
+    build:
+      context: ./gateway-server
     container_name: gateway-server
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
@@ -71,10 +74,11 @@ services:
       - logstash
       - config-server
   authentication-service:
-    image: tddo-authentication-service:0.0.1
+    build:
+      context: ./authentication-service
     container_name: authentication-service
     environment:
-      - "SPRING_PROFILES_ACTIVE=elk"
+      - "SPRING_PROFILES_ACTIVE=elk,configserver"
     ports:
       - "8073:8073"
     networks:
