@@ -30,9 +30,10 @@ dependencies {
     implementation("javax.xml.bind", "jaxb-api", "2.1") // for jwt dependency
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
-    runtimeOnly("com.h2database:h2")
 
+    runtimeOnly("com.h2database:h2")
     implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
+    implementation("org.postgresql:postgresql") //postgres
 }
 
 dependencyManagement {

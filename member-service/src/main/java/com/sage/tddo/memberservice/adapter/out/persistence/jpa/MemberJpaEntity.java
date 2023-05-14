@@ -1,6 +1,5 @@
-package com.sage.tddo.authenticationservice.adapter.out.persistence;
+package com.sage.tddo.memberservice.adapter.out.persistence.jpa;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -13,14 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Table(name = "member")
-public class Member {
-
+public class MemberJpaEntity {
     @Id
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    private boolean enabled;
-
+    private String id;
+    private String name;
 }

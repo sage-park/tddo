@@ -1,9 +1,6 @@
 package com.sage.tddo.authenticationservice.adapter.out.persistence;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +11,7 @@ import java.util.Collection;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "authority")
 public class Authority implements GrantedAuthority{
     @Id
     @GeneratedValue

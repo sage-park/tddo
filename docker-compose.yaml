@@ -5,6 +5,28 @@ networks:
     driver: bridge
 
 services:
+  authentication-db:
+    image: postgres:latest
+    container_name: authentication-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "tddo"
+    networks:
+      - tddo
+  member-db:
+    image: postgres:latest
+    container_name: member-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "tddo"
+    networks:
+      - tddo
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     container_name: elasticsearch
@@ -85,4 +107,18 @@ services:
       - tddo
     depends_on:
       - gateway-server
+  member-service:
+    build:
+      context: ./member-service
+    container_name: member-service
+    environment:
+      - "SPRING_PROFILES_ACTIVE=elk,configserver"
+    ports:
+      - "8074:8074"
+    networks:
+      - tddo
+    depends_on:
+      - gateway-server
+
+
 
