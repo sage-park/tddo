@@ -9,8 +9,9 @@ public class RegisterParam {
     private final String id;
     private final String password;
     private final String name;
+    private final boolean enabled;
 
-    public RegisterParam(String id, String password, String name) {
+    public RegisterParam(String id, String password, String name, boolean enabled) {
         if (!StringUtils.hasLength(id)) {
             throw new IllegalArgumentException("userId is null");
         }
@@ -26,5 +27,6 @@ public class RegisterParam {
         this.id = id;
         this.password = password;
         this.name = name;
+        this.enabled = enabled;
     }
 }

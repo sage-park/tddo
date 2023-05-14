@@ -17,7 +17,8 @@ public class SaveAuthenticationJpaPort implements SaveAuthenticationPort {
     public void save(Authentication authentication) {
         AuthenticationJpaEntity entity = new AuthenticationJpaEntity(
                 authentication.getId(),
-                authentication.getPassword()
+                authentication.getPassword(),
+                authentication.isEnabled()
         );
         authenticationJpaRepository.save(entity);
     }

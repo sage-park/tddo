@@ -45,7 +45,7 @@ class AuthenticationServiceImplTest {
     void ifIdAlreadyExist() {
         //given
         String id = "user01";
-        RegisterParam param = new RegisterParam(id, "password01", "김구");
+        RegisterParam param = new RegisterParam(id, "password01", "김구", true);
 
         given(loadAuthenticationPort.isExist(id)).willReturn(true);
 
@@ -62,7 +62,7 @@ class AuthenticationServiceImplTest {
     @Test
     void ifNotExist() {
         //given
-        RegisterParam param = new RegisterParam("user01", "password01", "김구");
+        RegisterParam param = new RegisterParam("user01", "password01", "김구", true);
 
         //when
         authenticationService.register(param);
@@ -72,6 +72,7 @@ class AuthenticationServiceImplTest {
         then(saveAuthenticationPort).should().save(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().getId()).isEqualTo(param.getId());
         assertThat(argumentCaptor.getValue().getPassword()).isEqualTo(param.getPassword());
+        assertThat(argumentCaptor.getValue().isEnabled()).isEqualTo(param.isEnabled());
 
     }
 
@@ -81,7 +82,7 @@ class AuthenticationServiceImplTest {
     @Test
     void saveUserInfo() {
         //given
-        RegisterParam param = new RegisterParam("user01", "password01", "김구");
+        RegisterParam param = new RegisterParam("user01", "password01", "김구", true);
 
         //when
         authenticationService.register(param);

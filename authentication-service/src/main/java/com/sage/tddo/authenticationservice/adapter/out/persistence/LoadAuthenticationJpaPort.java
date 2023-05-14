@@ -27,7 +27,8 @@ public class LoadAuthenticationJpaPort implements LoadAuthenticationPort {
 
         return new Authentication(
                 authenticationJpaEntity.getId(),
-                authenticationJpaEntity.getPassword()
+                authenticationJpaEntity.getPassword(),
+                authenticationJpaEntity.isEnabled()
         );
     }
 }

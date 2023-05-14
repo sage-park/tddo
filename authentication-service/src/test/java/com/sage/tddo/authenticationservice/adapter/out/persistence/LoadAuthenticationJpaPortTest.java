@@ -1,17 +1,16 @@
 package com.sage.tddo.authenticationservice.adapter.out.persistence;
 
-import com.netflix.discovery.converters.Auto;
 import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaEntity;
 import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaRepository;
 import com.sage.tddo.authenticationservice.application.service.AuthenticationNotFoundException;
 import com.sage.tddo.authenticationservice.domain.Authentication;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchException;
 
 
 @DataJpaTest
@@ -33,7 +32,7 @@ class LoadAuthenticationJpaPortTest {
     @Test
     void existAuthentication() {
         //given
-        authenticationJpaRepository.save(new AuthenticationJpaEntity("id", "password"));
+        authenticationJpaRepository.save(new AuthenticationJpaEntity("id", "password", true));
 
         //when
         boolean exist = loadAuthenticationJpaPort.isExist("id");
@@ -48,7 +47,7 @@ class LoadAuthenticationJpaPortTest {
     @Test
     void loadAuthentication() {
         //given
-        authenticationJpaRepository.save(new AuthenticationJpaEntity("id", "password"));
+        authenticationJpaRepository.save(new AuthenticationJpaEntity("id", "password", true));
 
         //when
         Authentication authentication = loadAuthenticationJpaPort.load("id");

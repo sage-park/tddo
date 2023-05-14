@@ -27,7 +27,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new UserIdAlreadyExistException();
         }
 
-        Authentication authentication = new Authentication(param.getId(), param.getPassword());
+        Authentication authentication = new Authentication(param.getId(), param.getPassword(), param.isEnabled());
 
         saveAuthenticationPort.save(authentication);
 

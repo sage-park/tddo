@@ -1,5 +1,9 @@
 package com.sage.tddo.authenticationservice.adapter.out.persistence;
 
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaEntity;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaRepository;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthorityJpaEntity;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthorityJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +21,14 @@ class JpaUserDetailsServiceTest {
     UserDetailsService userDetailsService;
 
     @Autowired
-    private AuthorityRepository authorityRepository;
-
+    private AuthorityJpaRepository authorityJpaRepository;
     @Autowired
-    private MemberRepository memberRepository;
+    private AuthenticationJpaRepository authenticationJpaRepository;
 
     @BeforeEach
     void setUp() {
         userDetailsService = new JpaUserDetailsService(
-                memberRepository, authorityRepository
+                authorityJpaRepository, authenticationJpaRepository
         );
     }
 
@@ -33,9 +36,9 @@ class JpaUserDetailsServiceTest {
     @Test
     void testLoadUserByUsername() {
         //given
-        memberRepository.save(new Member("user01", "password01", true));
-        authorityRepository.save(new Authority("user01", "ROLE_USER"));
-        authorityRepository.save(new Authority("user01", "ADMIN"));
+        authenticationJpaRepository.save(new AuthenticationJpaEntity("user01", "password01", true));
+        authorityJpaRepository.save(new AuthorityJpaEntity("user01", "ROLE_USER"));
+        authorityJpaRepository.save(new AuthorityJpaEntity("user01", "ADMIN"));
 
 
         UserDetails userDetails = userDetailsService.loadUserByUsername("user01");

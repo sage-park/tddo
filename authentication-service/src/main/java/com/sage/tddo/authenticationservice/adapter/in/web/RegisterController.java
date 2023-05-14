@@ -44,7 +44,8 @@ public class RegisterController {
 
         try {
             String encodedPassword = passwordEncoder.encode(request.getPassword());
-            authenticationService.register(new RegisterParam(request.getId(), encodedPassword, request.getName()));
+            boolean enabled = request.getEnabled() != null ? request.getEnabled() : true;
+            authenticationService.register(new RegisterParam(request.getId(), encodedPassword, request.getName(), enabled));
         } catch (UserIdAlreadyExistException e) {
             e.printStackTrace();
             return ResponseEntity

@@ -15,9 +15,12 @@ public class AuthenticationJpaEntity {
     @Id
     private String id;
     private String password;
+    private boolean enabled;
 
-    public AuthenticationJpaEntity(String id, String password) {
+    public AuthenticationJpaEntity(String id, String password, boolean enabled) {
         this.id = id;
         this.password = password;
+        this.enabled = enabled;
     }
+
 }

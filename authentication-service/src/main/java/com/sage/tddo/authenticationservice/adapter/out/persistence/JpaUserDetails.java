@@ -1,5 +1,7 @@
 package com.sage.tddo.authenticationservice.adapter.out.persistence;
 
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaEntity;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthorityJpaEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,9 +11,8 @@ import java.util.List;
 
 @AllArgsConstructor
 public class JpaUserDetails implements UserDetails {
-
-    private Member member;
-    private List<Authority> authorities;
+    private AuthenticationJpaEntity authentication;
+    private List<AuthorityJpaEntity> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -20,12 +21,12 @@ public class JpaUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return member.getPassword();
+        return authentication.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getUsername();
+        return authentication.getId();
     }
 
     @Override
@@ -45,6 +46,6 @@ public class JpaUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return member.isEnabled();
+        return authentication.isEnabled();
     }
 }

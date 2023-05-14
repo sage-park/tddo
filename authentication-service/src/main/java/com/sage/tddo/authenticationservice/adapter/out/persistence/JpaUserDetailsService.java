@@ -1,5 +1,9 @@
 package com.sage.tddo.authenticationservice.adapter.out.persistence;
 
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaEntity;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthenticationJpaRepository;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthorityJpaEntity;
+import com.sage.tddo.authenticationservice.adapter.out.persistence.jpa.AuthorityJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,18 +16,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JpaUserDetailsService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
-    private final AuthorityRepository authorityRepository;
+    private final AuthorityJpaRepository authorityJpaRepository;
+    private final AuthenticationJpaRepository authenticationJpaRepository;
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member member = memberRepository.findById(username)
+        AuthenticationJpaEntity authentication = authenticationJpaRepository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        List<Authority> authorities = authorityRepository.findAllByUsername(username);
+        List<AuthorityJpaEntity> authorities = authorityJpaRepository.findAllByUsername(username);
 
-        return new JpaUserDetails(member, authorities);
+        return new JpaUserDetails(authentication, authorities);
     }
 }

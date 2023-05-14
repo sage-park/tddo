@@ -11,8 +11,8 @@ class AuthenticationTest {
      */
     @Test
     void ifIdOfPasswordAreNull() {
-        assertThrows(IllegalArgumentException.class, () -> new Authentication("id", null));
-        assertThrows(IllegalArgumentException.class, () -> new Authentication(null, "password"));
+        assertThrows(IllegalArgumentException.class, () -> new Authentication("id", null, true));
+        assertThrows(IllegalArgumentException.class, () -> new Authentication(null, "password", true));
     }
 
 }

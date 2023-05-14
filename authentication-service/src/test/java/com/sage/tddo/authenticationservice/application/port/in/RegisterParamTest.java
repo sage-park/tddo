@@ -18,7 +18,7 @@ class RegisterParamTest {
 
         //when
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new RegisterParam(userId, password, userName);
+            new RegisterParam(userId, password, userName, true);
         });
 
         //then
@@ -37,7 +37,7 @@ class RegisterParamTest {
 
         //when
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new RegisterParam(userId, password, userName);
+            new RegisterParam(userId, password, userName, true);
         });
 
         //then
@@ -56,7 +56,7 @@ class RegisterParamTest {
 
         //when
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            new RegisterParam(userId, password, userName);
+            new RegisterParam(userId, password, userName, true);
         });
 
         //then
