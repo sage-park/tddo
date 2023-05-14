@@ -139,7 +139,6 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
-out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -225,7 +224,6 @@ replay_pid*
 # IntelliJ project files
 .idea
 *.iml
-out
 gen
 .java-version
 build/
