@@ -44,6 +44,7 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 
 	implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
+	runtimeOnly("com.h2database:h2") //h2 database
 }
 
 dependencyManagement {
