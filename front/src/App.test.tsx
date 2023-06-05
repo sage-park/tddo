@@ -4,6 +4,9 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  // App이 렌더링 되면 /login 으로 리다이렉트 한다.
+
+  expect(screen.getByText('login')).toBeInTheDocument();
+
 });
