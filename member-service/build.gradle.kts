@@ -46,6 +46,8 @@ dependencies {
 	implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
 	runtimeOnly("com.h2database:h2") //h2 database
 	implementation("org.postgresql:postgresql") //postgres
+	implementation("org.springframework.cloud:spring-cloud-starter-stream-kafka") //kafka
+	implementation("org.springframework.cloud:spring-cloud-stream") //spring cloud stream
 }
 
 dependencyManagement {

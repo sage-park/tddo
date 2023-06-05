@@ -24,6 +24,5 @@ public class MemberRepository implements LoadMemberPort, SaveMemberPort {
     @Override
     public void save(Member member) {
         memberJpaRepository.save(new MemberJpaEntity(member.getId(), member.getName()));
-
     }
 }

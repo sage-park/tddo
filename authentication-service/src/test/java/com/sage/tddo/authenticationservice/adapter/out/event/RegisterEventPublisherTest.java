@@ -1,26 +1,27 @@
-package com.sage.tddo.authenticationservice.adapter.out.memberservice;
+package com.sage.tddo.authenticationservice.adapter.out.event;
 
-import com.sage.tddo.authenticationservice.application.port.out.SaveUserInfoPort;
+import com.sage.tddo.authenticationservice.application.port.out.RegisterEventPort;
+import com.sage.tddo.authenticationservice.config.EventPublisher;
 import com.sage.tddo.authenticationservice.domain.Member;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.client.RestTemplate;
 
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class MemberServiceClientTest {
+class RegisterEventPublisherTest {
 
-    SaveUserInfoPort saveUserInfoPort;
+    RegisterEventPort registerEventPort;
     @Mock
-    private RestTemplate restTemplate;
+    private EventPublisher eventPublisher;
 
     @BeforeEach
+
     void setUp() {
-        saveUserInfoPort = new MemberServiceClient(restTemplate);
+        registerEventPort = new RegisterEventPublisher(eventPublisher);
     }
 
     /**
@@ -31,9 +32,9 @@ class MemberServiceClientTest {
         //given
         Member member = new Member("user01", "김구");
         //when
-        saveUserInfoPort.save(member);
+        registerEventPort.send(member);
         //then
-        then(restTemplate).should().postForEntity(eq("/member-service/member"), refEq(member), eq(String.class));
+        then(eventPublisher).should().send(eq("registerMember"), refEq(member));
 
     }
 

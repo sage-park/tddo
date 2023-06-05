@@ -1,8 +1,10 @@
 package com.sage.tddo.authenticationservice.domain;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.util.StringUtils;
 
+@ToString
 public class Member {
     @Getter
     private String id;
