@@ -228,3 +228,4 @@ gen
 .java-version
 build/
 .gradle/
+/front/node_modules/
