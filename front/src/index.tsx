@@ -6,6 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
+import Login from "./page/Login";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 const router = createBrowserRouter([
     {
@@ -14,7 +19,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <div>login</div>,
+        element: <Login/>,
     }
 ])
 

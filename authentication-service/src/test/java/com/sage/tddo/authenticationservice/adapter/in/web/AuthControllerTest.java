@@ -59,6 +59,8 @@ class AuthControllerTest {
         //then
         action
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid username or password"))
+                .andExpect(jsonPath("$.code").value("ERROR_002"))
         ;
 
 
@@ -72,6 +74,8 @@ class AuthControllerTest {
         //then
         action02
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid username or password"))
+                .andExpect(jsonPath("$.code").value("ERROR_002"))
         ;
 
     }

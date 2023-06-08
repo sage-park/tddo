@@ -23,11 +23,15 @@ public class AuthController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/auth/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
+    public ResponseEntity<?> authenticate(
             @RequestBody AuthenticationRequest request, HttpServletResponse response){
 
         if (!StringUtils.hasLength(request.getUsername()) || !StringUtils.hasLength(request.getPassword())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(
+                            new ErrorResponse(ErrorCode.ERROR_002, "Invalid username or password")
+                    );
         }
 
         Authentication authenticate;
