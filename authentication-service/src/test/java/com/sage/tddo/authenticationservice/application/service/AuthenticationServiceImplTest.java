@@ -5,6 +5,7 @@ import com.sage.tddo.authenticationservice.application.port.in.RegisterParam;
 import com.sage.tddo.authenticationservice.application.port.out.LoadAuthenticationPort;
 import com.sage.tddo.authenticationservice.application.port.out.SaveAuthenticationPort;
 import com.sage.tddo.authenticationservice.application.port.out.RegisterEventPort;
+import com.sage.tddo.authenticationservice.application.port.out.SaveUserInfoPort;
 import com.sage.tddo.authenticationservice.domain.Authentication;
 import com.sage.tddo.authenticationservice.domain.Member;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,14 +28,13 @@ class AuthenticationServiceImplTest {
     @Mock
     private SaveAuthenticationPort saveAuthenticationPort;
     @Mock
-    private RegisterEventPort registerEventPort;
-
-    @Mock
     private LoadAuthenticationPort loadAuthenticationPort;
+    @Mock
+    private SaveUserInfoPort saveUserInfoPort;
 
     @BeforeEach
     void setUp() {
-        authenticationService = new AuthenticationServiceImpl(saveAuthenticationPort, registerEventPort, loadAuthenticationPort);
+        authenticationService = new AuthenticationServiceImpl(saveAuthenticationPort, saveUserInfoPort, loadAuthenticationPort);
     }
 
     /**
@@ -89,7 +89,7 @@ class AuthenticationServiceImplTest {
 
         //then
         ArgumentCaptor<Member> argumentCaptor = ArgumentCaptor.forClass(Member.class);
-        then(registerEventPort).should().send(argumentCaptor.capture());
+        then(saveUserInfoPort).should().send(argumentCaptor.capture());
         assertThat(argumentCaptor.getValue().getId()).isEqualTo(param.getId());
         assertThat(argumentCaptor.getValue().getName()).isEqualTo(param.getName());
 

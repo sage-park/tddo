@@ -5,6 +5,7 @@ import com.sage.tddo.authenticationservice.application.port.in.RegisterParam;
 import com.sage.tddo.authenticationservice.application.port.out.LoadAuthenticationPort;
 import com.sage.tddo.authenticationservice.application.port.out.SaveAuthenticationPort;
 import com.sage.tddo.authenticationservice.application.port.out.RegisterEventPort;
+import com.sage.tddo.authenticationservice.application.port.out.SaveUserInfoPort;
 import com.sage.tddo.authenticationservice.domain.Authentication;
 import com.sage.tddo.authenticationservice.domain.Member;
 import jakarta.transaction.Transactional;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final SaveAuthenticationPort saveAuthenticationPort;
-    private final RegisterEventPort registerEventPort;
+    private final SaveUserInfoPort saveUserInfoPort;
     private final LoadAuthenticationPort loadAuthenticationPort;
 
     @Override
@@ -32,7 +33,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         saveAuthenticationPort.save(authentication);
 
         Member member = new Member(param.getId(), param.getName());
-        registerEventPort.send(member);
+        saveUserInfoPort.send(member);
+
 
     }
 
