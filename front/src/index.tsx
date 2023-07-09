@@ -11,6 +11,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import RegisterMember from "./page/RegisterMember";
+import ProjectsPage from "./page/ProjectsPage";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +22,16 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login/>,
+    },
+    {
+        path: "/register-member",
+        element: <RegisterMember/>,
+    },
+    {
+        path: "/projects",
+        element: <ProjectsPage/>,
     }
+
 ])
 
 const root = ReactDOM.createRoot(

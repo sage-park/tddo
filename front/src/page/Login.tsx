@@ -4,6 +4,12 @@ import {loginApi} from "../api/authentication";
 import {Alert} from "@mui/material";
 import {AxiosError} from "axios";
 import {saveToken} from "../util/AuthUtils";
+import {Link} from "react-router-dom";
+import Background from "../component/auth/Background";
+import Paper from "../component/auth/Paper";
+import Title from "../component/auth/Title";
+import Button from "../component/auth/Button";
+import ErrorMessage from "../component/auth/ErrorMessage";
 
 const Login = () => {
 
@@ -62,11 +68,9 @@ const Login = () => {
     };
 
     return (
-        <div className={classNames("w-screen", "h-screen", "bg-gray-200", 'flex', 'justify-center', 'items-center')}>
-            <div className={classNames("w-[30rem]", "bg-white", 'rounded-2xl', 'drop-shadow', 'p-14')}>
-                <div className={classNames('flex', 'justify-center')}>
-                    LOGIN
-                </div>
+        <Background>
+            <Paper>
+                <Title title={"LOGIN"}/>
                 <div className={classNames('pt-4')}>
                     <div className={classNames('h-28', 'flex', 'items-center', 'flex-col', 'justify-around')}>
                         <input type='text' placeholder='Username'
@@ -80,24 +84,16 @@ const Login = () => {
                                onChange={(event) => setPassword(event.target.value)}
                         />
                     </div>
-                    <div style={
-                        isError
-                            ? {display: "block"}
-                            : {display: "none"}
-                    }>
-                        <Alert severity="warning">{errorMessage}</Alert>
-                    </div>
+                    <ErrorMessage isError={isError} errorMessage={errorMessage}/>
                     <div className={classNames('h-16', 'flex', 'items-center')}>
-                        <button
-                            className={classNames('w-full', 'h-10', 'bg-blue-500', 'text-white')}
-                            onClick={clickLoginButton}
-                        >
-                            Login
-                        </button>
+                        <Button onClickButton={clickLoginButton} name={'Login'}/>
+                    </div>
+                    <div className={classNames('text-right', 'text-gray-500', 'text-xs')}>
+                        <Link to="/register-member">SIGN UP</Link>
                     </div>
                 </div>
-            </div>
-        </div>
+            </Paper>
+        </Background>
     )
 
 }
