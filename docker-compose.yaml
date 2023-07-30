@@ -1,21 +1,17 @@
 version: "3"
 
-networks:
-  tddo:
-    driver: bridge
-
 services:
-  authentication-db:
+  auth-db:
     image: postgres:latest
-    container_name: authentication-db
+    container_name: auth-db
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "tddo"
-    networks:
-      - tddo
+    volumes:
+      - tddo-auth-db-volume:/var/lib/postgresql/data
   member-db:
     image: postgres:latest
     container_name: member-db
@@ -25,8 +21,19 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB: "tddo"
-    networks:
-      - tddo
+    volumes:
+      - tddo-member-db-volume:/var/lib/postgresql/data
+  project-db:
+    image: postgres:latest
+    container_name: project-db
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "tddo"
+    volumes:
+      - tddo-project-db-volume:/var/lib/postgresql/data
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     container_name: elasticsearch
@@ -35,8 +42,8 @@ services:
     ports:
       - "9300:9300"
       - "9200:9200"
-    networks:
-      - tddo
+    volumes:
+      - tddo-elasticsearch-volume:/usr/share/elasticsearch/data
   kibana:
     image: docker.elastic.co/kibana/kibana:7.16.2
     container_name: kibana
@@ -44,8 +51,6 @@ services:
       ELASTICSEARCH_URL: "http://elasticsearch:9300"
     ports:
       - "5601:5601"
-    networks:
-      - tddo
   logstash:
     image: docker.elastic.co/logstash/logstash:7.16.2
     container_name: logstash
@@ -54,20 +59,34 @@ services:
       - ./docker/logstash:/etc/logstash/conf.d
     ports:
       - "5001:5001"
-    depends_on:
-      - elasticsearch
-    networks:
-      - tddo
+  redis-server:
+    image: redis:latest
+    container_name: redis-server
+    ports:
+      - "6379:6379"
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.219.104
+      #      KAFKA_ADVERTISED_HOST_NAME: 192.168.1.230
+      #      KAFKA_ADVERTISED_HOST_NAME: 172.30.1.64
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   config-server:
     build:
       context: ./config-server
     container_name: config-server
     ports:
       - "8071:8071"
-    networks:
-      - tddo
-    depends_on:
-      - logstash
   discovery-server:
     build:
       context: ./discovery-server
@@ -76,37 +95,26 @@ services:
       - "SPRING_PROFILES_ACTIVE=dev"
     ports:
       - "8072:8072"
-    networks:
-      - tddo
-    depends_on:
-      - logstash
-      - config-server
   gateway-server:
     build:
       context: ./gateway-server
     container_name: gateway-server
     environment:
-      - "SPRING_PROFILES_ACTIVE=dev"
+      - "SPRING_PROFILES_ACTIVE=elk,dev"
+      - "JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5006,server=y,suspend=n"
     ports:
       - "8070:8070"
-    networks:
-      - tddo
-    depends_on:
-      - discovery-server
-      - logstash
-      - config-server
+      - "5006:5006"
   authentication-service:
     build:
       context: ./authentication-service
     container_name: authentication-service
     environment:
       - "SPRING_PROFILES_ACTIVE=elk,configserver"
+      - "JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n"
     ports:
       - "8073:8073"
-    networks:
-      - tddo
-    depends_on:
-      - gateway-server
+      - "5005:5005"
   member-service:
     build:
       context: ./member-service
@@ -115,37 +123,14 @@ services:
       - "SPRING_PROFILES_ACTIVE=elk,configserver"
     ports:
       - "8074:8074"
-    networks:
-      - tddo
-    depends_on:
-      - gateway-server
-  redis-server:
-    image: redis:latest
-    container_name: redis-server
-    ports:
-      - "6379:6379"
-    networks:
-      - tddo
-  zookeeper:
-    image: wurstmeister/zookeeper
-    container_name: zookeeper
-    networks:
-      - tddo
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    container_name: kafka
-    networks:
-      - tddo
-    ports:
-      - "9092:9092"
+  project-service:
+    build:
+      context: ./project-service
+    container_name: project-service
     environment:
-#      KAFKA_ADVERTISED_HOST_NAME: 192.168.219.104
-      KAFKA_ADVERTISED_HOST_NAME: 172.30.1.64
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - "SPRING_PROFILES_ACTIVE=elk,configserver"
+    ports:
+      - "8075:8075"
   front:
     build:
       context: ./front
@@ -153,8 +138,16 @@ services:
     container_name: front
     ports:
       - "3000:3000"
-    networks:
-      - tddo
 
+
+volumes:
+  tddo-auth-db-volume:
+    external: true
+  tddo-member-db-volume:
+    external: true
+  tddo-project-db-volume:
+    external: true
+  tddo-elasticsearch-volume:
+    external: true
 
 
