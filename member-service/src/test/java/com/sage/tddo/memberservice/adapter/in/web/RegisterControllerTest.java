@@ -37,7 +37,7 @@ class RegisterControllerTest {
 
         //when
         ResultActions result = mockMvc.perform(
-                post("/member")
+                post("/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"id\":" +
@@ -63,7 +63,7 @@ class RegisterControllerTest {
                 .given(userRegisterUsecase).register(any(), any());
         //when
         ResultActions result = mockMvc.perform(
-                post("/member")
+                post("/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"id\":" +

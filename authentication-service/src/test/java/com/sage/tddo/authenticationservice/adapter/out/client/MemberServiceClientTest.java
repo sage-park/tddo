@@ -31,7 +31,7 @@ class MemberServiceClientTest {
         //when
         memberServiceClient.send(member);
         //then
-        then(customRestTemplate).should().postForEntity("/member-service/member", member, String.class);
+        then(customRestTemplate).should().postForEntity("/member-service/members", member, String.class);
     }
 
 

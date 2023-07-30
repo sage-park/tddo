@@ -13,6 +13,6 @@ public class MemberServiceClient implements SaveUserInfoPort {
     private final RestTemplate customRestTemplate;
     @Override
     public void send(Member member) {
-        customRestTemplate.postForEntity("/member-service/member", member, String.class);
+        customRestTemplate.postForEntity("/member-service/members", member, String.class);
     }
 }

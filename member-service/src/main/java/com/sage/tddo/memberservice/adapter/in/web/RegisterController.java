@@ -16,7 +16,7 @@ public class RegisterController {
 
     private final UserRegisterUsecase userRegisterUsecase;
 
-    @PostMapping("/member")
+    @PostMapping("/members")
     public ResponseEntity postMember(
             @RequestBody PostMemberRequest request
     ) {
