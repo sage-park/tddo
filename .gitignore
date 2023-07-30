@@ -229,3 +229,4 @@ gen
 build/
 .gradle/
 /front/node_modules/
+.jpb
