@@ -1,0 +1,12 @@
+package com.sage.tddo.gatewayserver.auth;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TokenUser {
+    private String userId;
+}

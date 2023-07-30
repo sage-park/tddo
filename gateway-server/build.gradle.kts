@@ -26,9 +26,14 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-config")
 	implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+	annotationProcessor("org.projectlombok:lombok")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	annotationProcessor("org.projectlombok:lombok")
+
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	implementation("javax.xml.bind", "jaxb-api", "2.1") // for jwt dependency
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 
 	implementation("net.logstash.logback:logstash-logback-encoder:7.1.1") //logstash
